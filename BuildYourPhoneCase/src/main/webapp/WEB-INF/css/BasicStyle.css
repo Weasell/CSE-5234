@@ -1,0 +1,21 @@
+@charset "UTF-8";
+table, th, td {
+  border: 1px solid black;
+}
+
+
+body{
+  background: #555;
+}
+
+hr{
+	width:100%;
+	text-align:left;
+	margin-left:0 ; 
+}
+.content {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
