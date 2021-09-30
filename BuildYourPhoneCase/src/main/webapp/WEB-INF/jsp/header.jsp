@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
  
-<style><%@include file="/WEB-INF/css/header.css"%></style> 
+<style><%@include file="/css/header.css"%></style> 
   
 </head>
 <body>
@@ -37,6 +40,18 @@
     </div> <!--end shopping-cart-header -->
 
     <ul class="shopping-cart-items">
+    
+    <c:forEach items="${order.items}" var="item" varStatus="loop">
+     <li class="clearfix">
+        <img src="${item.image }" alt="image" />
+        <span class="item-name">${item.name}</span>
+        <span class="item-price">${item.price}</span>
+        <span class="item-quantity">${item.quantity}</span>
+      </li>
+    </c:forEach>
+    
+    
+   <!-- 
       <li class="clearfix">
         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
         <span class="item-name">Sony DSC-RX100M III</span>
@@ -57,6 +72,7 @@
         <span class="item-price">$129.99</span>
         <span class="item-quantity">Quantity: 01</span>
       </li>
+    --> 
     </ul>
 
     <a href="#" class="button">Checkout</a>

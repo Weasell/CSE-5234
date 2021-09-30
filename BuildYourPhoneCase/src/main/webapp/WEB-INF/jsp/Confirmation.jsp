@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Confirmation</title>
-<style><%@include file="/WEB-INF/css/BasicStyle.css"%></style>
+<style><%@include file="/css/BasicStyle.css"%></style>
 </head>
 <body>
 <div class="content">

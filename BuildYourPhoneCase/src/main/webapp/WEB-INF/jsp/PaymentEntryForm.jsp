@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style><%@include file="/WEB-INF/css/BasicStyle.css"%></style>
+<style><%@include file="/css/BasicStyle.css"%></style>
 <title>Payment Info</title>
 </head>
 <body>

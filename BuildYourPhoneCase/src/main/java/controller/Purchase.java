@@ -38,6 +38,16 @@ public class Purchase {
 		Order product = new Order(); 
 		product.setItems(items );
 		request.setAttribute("product", product);
+		
+		//check if there is a anything stored in the cart 
+		Order order  ; 
+		if (request.getSession().getAttribute("order") == null ) {
+			order = new Order(); 
+			
+		}else {
+			order =(Order) request.getSession().getAttribute("order") ;
+		}
+		request.setAttribute("order", order);
 		 
 		return "OrderEntryForm";
 	}
@@ -124,8 +134,9 @@ public class Purchase {
 			}
 			
 		} 
-		request.getSession().setAttribute("order", order );     
-		return "redirect:/purchase/shoppingCart";
+		request.getSession().setAttribute("order", order );    
+		//FIXME
+		return "redirect:/purchase/shoppingCart ";
 		}
 	 
 	
