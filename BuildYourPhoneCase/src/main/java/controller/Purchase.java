@@ -25,9 +25,9 @@ public class Purchase {
 		 request.setAttribute("itemAttribute", new Item());
 		 //current products and their storage pulling from the db 
 		 int storage = 100 ; 
-		 Item iphone9 = new Item("iphone9Case", "13",storage); 
-		 Item iphone10 = new Item("iphone10Case", "13",storage); 
-		 Item iphone11 = new Item("iphone11Case", "13",storage); 
+		 Item iphone9 = new Item("iphone9Case", "13",storage, "https://cdn.webshopapp.com/shops/221036/files/297679314/fooncase-iphone-11-pro-phone-case-tropical-desire.jpg"); 
+		 Item iphone10 = new Item("iphone10Case", "13",storage,"https://m.media-amazon.com/images/I/61zUnyvNEML._AC_SX522_.jpg"); 
+		 Item iphone11 = new Item("iphone11Case", "13",storage, "https://cdn.shopify.com/s/files/1/1706/8353/products/here-comes-the-sun-colorblock-sunset-case-iphone-case-bold-iphone-12-pro-714397_800x.progressive.jpg?v=1631572203"); 
 		 
 		 
 		//pass all products info to .jsp
@@ -106,14 +106,20 @@ public class Purchase {
 		}
 		
 		if(itemInCart.getName() !=null && itemInCart.getPrice() !=null  ) {
-
+			
 			if(order.getItems().contains(itemInCart)) {
 				//update quantity
 				Item tempItem = order.getItems().get(order.getItems().indexOf(itemInCart)) ;
 				int newQuant = tempItem.getQuantity() +1; 
 				tempItem.setQuantity(newQuant) ; 
 			}else {
+				//set image path by name
+				String name = itemInCart.getName() ; 
+				String imagePath = itemInCart.getImagePathByName(name); 
+			    itemInCart.setImage(imagePath) ;
+
 				itemInCart.setQuantity(1) ; 
+				
 				order.getItems().add(itemInCart) ; 
 			}
 			
@@ -127,6 +133,12 @@ public class Purchase {
 	
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
+		//reset all item's images here 
+		for (int i=0; i<order.getItems().size(); i++) {
+			String itemName = order.getItems().get(i).getName(); 
+			String path = order.getItems().get(i).getImagePathByName(itemName) ; 
+			 order.getItems().get(i).setImage(path);
+		}
 		request.getSession().setAttribute("order", order);
 		
 		String buttonTriggered = request.getParameter("button") ; 

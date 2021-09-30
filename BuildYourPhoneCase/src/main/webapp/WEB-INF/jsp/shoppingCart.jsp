@@ -20,8 +20,9 @@
  <table>
  	<c:forEach items="${order.items}" var="item" varStatus="loop">
  		<tr>
+ 			<td><img class="responsive" src="${item.image}"></td>
  			<td><form:input path="items[${loop.index}].name" readonly="true" /></td>
- 			<td>$<form:input path="items[${loop.index}].price" readonly="true" /></td>
+ 			<td><form:input path="items[${loop.index}].price" readonly="true" /></td>
  			<td><form:input  path="items[${loop.index}].quantity"  type="number" value="${item.quantity }" min="1" max="${storage}" /></td>
  			<td><input type="submit" name="${loop.index}" value="Delete" id="${loop.index}"> </td>
  		</tr>

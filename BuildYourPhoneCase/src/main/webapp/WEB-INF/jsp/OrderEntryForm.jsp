@@ -19,7 +19,7 @@
  
  <c:forEach items="${product.items}" var="item" varStatus="loop">
  	<form:form  modelAttribute="itemAttribute" method="post" action="purchase/addToCart">  
- 
+		<img class="responsive" src="${ item.image}">
  		<form:input path="name" readonly="true" value="${item.name}" />  
  		<form:input path="price" readonly="true" value="${item.price}"/>  
  		<form:input path="quantity" readonly="true" value="${item.quantity}"/>  

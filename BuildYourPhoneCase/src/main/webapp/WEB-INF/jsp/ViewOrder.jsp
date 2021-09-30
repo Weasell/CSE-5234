@@ -20,6 +20,7 @@ Order Info:
 <table>
 	<c:forEach items="${order.items}" var="item" varStatus="loop">
 		<tr>
+			<td><img class="responsive" src="${item.image}"></td>
 			<td>Item Name: <c:out value="${item.name}"/></td>
 			<td>Item Price: <c:out value="$${item.price}"/></td>
 			<td>Quantity: <c:out value="${item.quantity}" /></td>
@@ -31,6 +32,7 @@ Shipping Info:
 <hr>
 
 <table>
+	
 	<tr><td>Name: <c:out value="${shippingInfo.name}"/> </td></tr> 
  	<tr><td>AddressLine1: <c:out value="${shippingInfo.addressLine1}"/> </td></tr>
  	<tr><td>AddressLine2: <c:out value="${shippingInfo.addressLine2}"/> </td></tr>

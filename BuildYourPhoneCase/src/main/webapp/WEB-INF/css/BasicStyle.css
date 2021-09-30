@@ -19,3 +19,9 @@ hr{
   background: white;
   padding: 10px;
 }
+
+.responsive {
+  max-width: 100%;
+  max-height: auto;
+ 
+}
