@@ -7,13 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style><%@include file="/WEB-INF/css/BasicStyle.css"%></style>
-
-
 <title>Purchase</title>
+<style><%@include file="/WEB-INF/css/BasicStyle.css"%></style> 
 </head>
 <body>
+<jsp:include page="header.jsp" />
 <div class="content">
+
 <h2>Product List</h2>
 
  
@@ -37,15 +37,10 @@
 
  
  <script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
-	
- 
- 
-
-
   
 
 </div>
 
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>
