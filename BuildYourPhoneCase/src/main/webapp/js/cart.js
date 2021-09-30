@@ -1,28 +1,14 @@
 /**
  * 
  */
-var removeCartItemButtons = document.getElementsByClassName("remove")
-var itemRowNum = 0 ;
-var maxStorage = 100 ;
-for (var i = 0; i < removeCartItemButtons.length; i++) {
-     var button = removeCartItemButtons[i]
-     button.addEventListener("click", removeCartItem )
-	 
- }
+ (function () {
+  $("#cart").on("click", function () {
+    $(".shopping-cart").fadeToggle("fast");
+  });
+})();
 
-var addToCartButtons = document.getElementsByClassName("cart")
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i]
-        button.addEventListener('click', addToCartClicked)
-    }
-
- 
- function removeCartItem(event) {
-    var buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.remove()
-     
-}
-
+/**
+ * 
 function addToCartClicked(event) {
     var button = event.target
     var shopItem = button.parentElement.parentElement
@@ -34,7 +20,7 @@ function addToCartClicked(event) {
 
 
 function addItemToCart(name, price, quantity) {
-  /**
+  
    var cartRow = document.createElement('tr')
 	var cartRowContents = `
 	<td><input id="items1.name" name="items[1].name" readonly="readonly" type="text" value="${name}"></td>
@@ -45,8 +31,9 @@ function addItemToCart(name, price, quantity) {
 	cartRow.innerHTML =cartRowContents
     var cartItems = document.getElementsByClassName('cartItems')[0]
 	cartItems.append(cartRow)
-     * 
- */
+      
+  
      
 }
 
+ */

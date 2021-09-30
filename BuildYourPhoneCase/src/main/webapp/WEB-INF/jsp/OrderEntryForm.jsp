@@ -36,8 +36,7 @@
 </form:form>  
 
  
- <script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
-  
+
 
 </div>
 

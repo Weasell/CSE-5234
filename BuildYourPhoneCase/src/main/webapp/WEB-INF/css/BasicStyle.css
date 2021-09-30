@@ -1,4 +1,12 @@
 @charset "UTF-8";
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
 table, th, td {
   border: 1px solid black;
 }
