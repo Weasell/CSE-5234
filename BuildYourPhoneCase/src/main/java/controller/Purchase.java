@@ -19,29 +19,26 @@ import model.ShippingInfo;
 @RequestMapping("/purchase")
 public class Purchase {
 	
+	 
 	@RequestMapping(method = RequestMethod.GET)
 	public String viewOrderEntryForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		 request.setAttribute("itemAttribute", new Item());
+		 //current products and their storage pulling from the db 
+		 int storage = 100 ; 
+		 Item iphone9 = new Item("iphone9Case", "13",storage); 
+		 Item iphone10 = new Item("iphone10Case", "13",storage); 
+		 Item iphone11 = new Item("iphone11Case", "13",storage); 
 		 
-		
-		ArrayList<Item> items = new ArrayList<Item>() ; 
-		int storage = 100 ; 
-		items .add(new Item("iphone9Case", "13",storage)) ; 
-		items .add(new Item("iphone10Case", "13",storage)) ; 
-		items .add(new Item("iphone11Case", "13",storage)) ; 
-		items .add(new Item("iphone12Case", "13", storage)) ; 
-		items .add(new Item("iphone13Case", "13",storage)) ; 
 		 
+		//pass all products info to .jsp
+		ArrayList<Item> items = new ArrayList<Item>() ; 	 
+		items .add(iphone9) ; 
+		items .add(iphone10) ; 
+		items .add(iphone11) ; 
 		Order product = new Order(); 
 		product.setItems(items );
 		request.setAttribute("product", product);
-		request.setAttribute("storage", storage);
-		
-		/*Order order = new Order() ; 
-		ArrayList<Item> purchases = new ArrayList<Item>() ; 
-		purchases.add(new Item("iphone9Case", "13", 1) ); 
-		order.setItems(purchases);
-		request.setAttribute("order", order);  */
-
+		 
 		return "OrderEntryForm";
 	}
 	
@@ -86,21 +83,83 @@ public class Purchase {
 		return "Confirmation";
 	}
 	
-	
+	@RequestMapping(path = "/shoppingCart", method = RequestMethod.GET)
+	public String shoppingCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int storage =100 ;
+		Order order = (Order) request.getSession().getAttribute("order") ; 
+		request.setAttribute("order", order);
+		request.setAttribute("storage", storage);
+		request.setAttribute("itemNum", order.getItems().size() ); 
 	 
+		return "shoppingCart";
+	}
+	
+	
+	@RequestMapping(path = "/addToCart", method = RequestMethod.POST)
+	public String addItemToCart(@ModelAttribute("JustAnAttributeName")Item itemInCart, HttpServletRequest request) {
+		Order order  ; 
+		if (request.getSession().getAttribute("order") == null ) {
+			order = new Order(); 
+			
+		}else {
+			order =(Order) request.getSession().getAttribute("order") ;
+		}
+		
+		if(itemInCart.getName() !=null && itemInCart.getPrice() !=null  ) {
+
+			if(order.getItems().contains(itemInCart)) {
+				//update quantity
+				Item tempItem = order.getItems().get(order.getItems().indexOf(itemInCart)) ;
+				int newQuant = tempItem.getQuantity() +1; 
+				tempItem.setQuantity(newQuant) ; 
+			}else {
+				itemInCart.setQuantity(1) ; 
+				order.getItems().add(itemInCart) ; 
+			}
+			
+		} 
+		request.getSession().setAttribute("order", order );     
+		return "redirect:/purchase/shoppingCart";
+		}
+	 
+	
+	
+	
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
 		request.getSession().setAttribute("order", order);
-		//System.out.print(shippingInfo.getName()) ; 
-		return "redirect:/purchase/shippingEntry";
+		
+		String buttonTriggered = request.getParameter("button") ; 
+		if(buttonTriggered !=null) {
+		 
+			if(buttonTriggered.equals("Continue Shopping")) {
+				return "redirect:/purchase";
+			}else if(buttonTriggered.equals("Purchase")){
+				return "redirect:/purchase/shippingEntry";		
+			}  
 		}
+		//delete
+		//update order 
+		int cartSize = order.getItems().size() ; 
+		for(int i=0; i<cartSize; i++) {
+			buttonTriggered = request.getParameter(String.valueOf(i)) ; 
+			System.out.print("testing-------" + buttonTriggered ) ; 
+			if(buttonTriggered !=null) {
+				order.getItems().remove(i) ; 
+			}
+		}			 
+		 request.setAttribute("order", order) ; 
+		 request.getSession().setAttribute("order", order);
+		 return "redirect:/purchase/shoppingCart";
+		 
+		
 	
-	
+	}
 	@RequestMapping(path = "/submitShipping", method = RequestMethod.POST)
 	public String submitShipping(@ModelAttribute("shippingInfo") ShippingInfo shippingInfo, HttpServletRequest request) {
 		request.getSession().setAttribute("shippingInfo", shippingInfo);
 		//System.out.print("------------TEST ------------"+ shippingInfo.getName()) ; 
-		 
+		
 		return "redirect:/purchase/paymentEntry";
 		}
 	
@@ -114,8 +173,12 @@ public class Purchase {
 		}
 	
 	
+	
+	
 	@RequestMapping(path = "/confirmOrder", method = RequestMethod.POST)
 	public String confirmation(  HttpServletRequest request) {
+		//stop session 
+		 request.getSession().invalidate() ;
 		return "redirect:/purchase/viewConfirmation";
 		}
 	
@@ -123,9 +186,9 @@ public class Purchase {
 	
 	@RequestMapping(path = "/keepShopping", method = RequestMethod.POST)
 	public String keepShopping(  HttpServletRequest request) {
+		 
 		return "redirect:/purchase";
 		}
-	
 	
 	
 	

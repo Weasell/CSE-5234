@@ -34,7 +34,8 @@ function addToCartClicked(event) {
 
 
 function addItemToCart(name, price, quantity) {
-    var cartRow = document.createElement('tr')
+  /**
+   var cartRow = document.createElement('tr')
 	var cartRowContents = `
 	<td><input id="items1.name" name="items[1].name" readonly="readonly" type="text" value="${name}"></td>
 	<td><input id="items1.price" name="items[1].price" readonly="readonly" type="text" value="${price}"></td>
@@ -44,7 +45,8 @@ function addItemToCart(name, price, quantity) {
 	cartRow.innerHTML =cartRowContents
     var cartItems = document.getElementsByClassName('cartItems')[0]
 	cartItems.append(cartRow)
-     
+     * 
+ */
      
 }
 
