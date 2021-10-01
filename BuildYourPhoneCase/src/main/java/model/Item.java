@@ -5,60 +5,42 @@ import java.util.Hashtable;
 import java.util.Objects;
 
 public class Item {
+	int id ; 
 	String name; 
-	String price; 
+	int price; 
 	int quantity;
 	String image ; 
-	 
-	
+	private Dictionary<Integer, String> idImageDic = new Hashtable<Integer, String>();
+	private Dictionary<Integer, String> idNameDic = new Hashtable<Integer, String>();
+	private Dictionary<Integer, Integer> idPriceDic = new Hashtable<Integer, Integer>();
 	public Item() {
+		loadData() ; 
 		
 	}
-	
-	
-
-	public String getImage() {
-		return image;
-	}
-
-
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-	
-	public String getImagePathByName(String name) {
-		//FIXME
-		//get image path from db
-		Dictionary<String, String> nameImageDic = new Hashtable<String, String>();
-		 nameImageDic.put("iphone9Case", "https://cdn.webshopapp.com/shops/221036/files/297679314/fooncase-iphone-11-pro-phone-case-tropical-desire.jpg");
-		 nameImageDic.put("iphone10Case",  "https://m.media-amazon.com/images/I/61zUnyvNEML._AC_SX522_.jpg");
-		 nameImageDic.put("iphone11Case",   "https://cdn.shopify.com/s/files/1/1706/8353/products/here-comes-the-sun-colorblock-sunset-case-iphone-case-bold-iphone-12-pro-714397_800x.progressive.jpg?v=1631572203");
-	        
-		return  nameImageDic.get(name) ; 
+	public Item(int id) {
+		this.id =id; 
 		
+		loadData();
+		this.name = idNameDic.get(id) ; 
+		this.price = idPriceDic.get(id) ; 
+		this.image = idImageDic.get(id) ; 
 		
+	    
+	}
+
+	 
+	public int getId() {
+		return id;
 	}
 
 
-	public Item(String name, String price, int quantity, String image) {
-		this.name = name;
-		this.price = price;
-		this.quantity = quantity;
-		this.image = image; 
-	}
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPrice() {
-		return price;
-	}
-	public void setPrice(String price) {
-		this.price = price;
+	public void setId(int id) {
+		//FIXME: CAN WE DO THIS  !!!!!!!
+		/*this.name = idNameDic.get(id) ; 
+		this.price = idPriceDic.get(id) ; 
+		this.image = idImageDic.get(id) ;   */
+		
+		this.id = id;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -68,14 +50,62 @@ public class Item {
 		this.quantity = quantity;
 	}
 	
+	
 
+
+	public String getName() {
+		return name;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public String getImage() {
+		return image;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setPrice( int price) {
+		this.price = price;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
+	
+	
+	 
+	public String getNameById(int id) {	
+		return  idNameDic.get(id) ; 
+		
+	}
+
+	public int getPriceById(int id) {	
+		return  idPriceDic.get(id) ; 
+		
+	}
+	public String getImagePathById(int id) {	
+		return  idImageDic.get(id) ; 
+		
+	}
+
+
+	
+	
 	 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, price);
+		return Objects.hash(id);
 	}
 
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,13 +115,37 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		return Objects.equals(name, other.name) && Objects.equals(price, other.price);
+		return id == other.id;
 	}
+
+
+
+
 
 	@Override
 	public String toString() {
-		return "Item [name=" + name + ", price=" + price + ", quantity=" + quantity + "]";
-	} 
+		return "Item [id=" + id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", image=" + image
+				+ "]";
+	}
 	
+	
+	private void loadData() {
+		//FIXME : images load from local cache
+				idImageDic.put(0, "https://cdn.webshopapp.com/shops/221036/files/297679314/fooncase-iphone-11-pro-phone-case-tropical-desire.jpg");
+				idImageDic.put(1,  "https://m.media-amazon.com/images/I/61zUnyvNEML._AC_SX522_.jpg");
+				idImageDic.put(2,   "https://cdn.shopify.com/s/files/1/1706/8353/products/here-comes-the-sun-colorblock-sunset-case-iphone-case-bold-iphone-12-pro-714397_800x.progressive.jpg?v=1631572203");
+				//FIXME: get from db
+				idNameDic.put(0, "iphone9Case") ; 
+				idNameDic.put(1, "iphone10Case") ; 
+				idNameDic.put(2, "iphone10Case") ; 
+				
+				idPriceDic.put(0, 20) ; 
+				idPriceDic.put(1, 25) ; 
+				idPriceDic.put(2, 30) ; 
+		
+	}
 
+
+
+	 
 }

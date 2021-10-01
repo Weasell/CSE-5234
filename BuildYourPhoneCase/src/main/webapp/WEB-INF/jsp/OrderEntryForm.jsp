@@ -15,14 +15,15 @@
 <div class="content">
 
 <h2>Product List</h2>
-
+ 
  
  <c:forEach items="${product.items}" var="item" varStatus="loop">
  	<form:form  modelAttribute="itemAttribute" method="post" action="purchase/addToCart">  
+ 		<form:hidden path="id" value="${item.id}"/>
 		<img class="responsive" src="${ item.image}">
- 		<form:input path="name" readonly="true" value="${item.name}" />  
- 		<form:input path="price" readonly="true" value="${item.price}"/>  
- 		<form:input path="quantity" readonly="true" value="${item.quantity}"/>  
+ 		 <p>${item.name}</p>
+ 		 <p>Unit Price: $${item.price}</p>
+ 		 
  		<input type="submit" value="ADD TO CART">  
  
 	</form:form>  
@@ -30,16 +31,13 @@
  </c:forEach> 
  
   
-  
-<form:form   method="post" action="purchase/addToCart">  
- 	<input type="submit" value="CART">  
-</form:form>  
-
+ 
  
 
 
 </div>
 
 <jsp:include page="footer.jsp" />
+
 </body>
 </html>

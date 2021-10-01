@@ -6,6 +6,7 @@
 }
 
 .onlyHeader {
+ 
   font: 14px/22px "Lato", Arial, sans-serif;
   background: #6394F8;
 }
@@ -61,7 +62,7 @@ nav ul li a:hover {
 }
 
 .shopping-cart {
- display: none;
+  
   margin: 20px 0;
   float: right;
   background: white;
@@ -142,4 +143,14 @@ nav ul li a:hover {
   content: "";
   display: table;
   clear: both;
+}
+
+.imageInCart{
+	max-width: 30%;
+  max-height: auto;
+}
+
+#warning{
+	color: red;
+	 
 }

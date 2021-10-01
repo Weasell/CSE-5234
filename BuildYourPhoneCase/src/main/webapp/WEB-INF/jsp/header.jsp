@@ -13,6 +13,7 @@
   
 </head>
 <body>
+
 <div class="onlyHeader">
   <nav>
   <div class="container">
@@ -22,7 +23,7 @@
     </ul> <!--end navbar-left -->
 
     <ul class="navbar-right">
-      <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">3</span></a></li>
+      <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">${cartSize}</span></a></li>
     </ul> <!--end navbar-right -->
   </div> <!--end container -->
 </nav>
@@ -32,24 +33,42 @@
 <div class="container">
   <div class="shopping-cart">
     <div class="shopping-cart-header">
-      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">${cartSize}</span>
       <div class="shopping-cart-total">
         <span class="lighter-text">Total:</span>
-        <span class="main-color-text">$2,229.97</span>
+        <span class="main-color-text">${sum}</span>
       </div>
     </div> <!--end shopping-cart-header -->
-
+	
     <ul class="shopping-cart-items">
     
+    <form:form  modelAttribute="order" method="post" action="purchase/submitItems"> 
+    <c:if test="${duplicateItem != ''}">
+		<p id="warning">${duplicateItem} has already been added into the cart</p>
+	 
+	</c:if> 
+    <c:if test="${ cartSize == 0}">
+		<p>Your Cart is Empty</p>
+	 
+	</c:if> 
     <c:forEach items="${order.items}" var="item" varStatus="loop">
      <li class="clearfix">
-        <img src="${item.image }" alt="image" />
-        <span class="item-name">${item.name}</span>
-        <span class="item-price">${item.price}</span>
-        <span class="item-quantity">${item.quantity}</span>
+     	<form:hidden path="items[${loop.index}].id" value="${item.id}"/>
+        <img src="${item.image }" alt="image" class="imageInCart" />
+        <span class="item-name"> ${item.name} </span>
+        <span class="item-price">Unit Price: $${item.price}</span> <br>
+        <span class="item-quantity">Quantity:<form:input  path="items[${loop.index}].quantity"  type="number" value="${item.quantity }" min="1" max="${storage}" /></span>
+        <input type="submit"   value="Update"   ><br>
+        <input type="submit" name="${loop.index}" value="Delete" >
+        
       </li>
     </c:forEach>
-    
+    <input type="submit" name="button" value="Checkout" id="checkout"> 
+ 
+    </form:form>
+     <c:if test="${ cartSize == 0}">
+    <script>document.getElementById("checkout").disabled = true;</script>
+    </c:if> 
     
    <!-- 
       <li class="clearfix">
@@ -74,13 +93,13 @@
       </li>
     --> 
     </ul>
-
-    <a href="#" class="button">Checkout</a>
+ 
+   <!--   <a href="#" class="button">Checkout</a>  -->
   </div> <!--end shopping-cart -->
 </div> <!--end container -->
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
  <script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
-  
+   
 </body>
 </html>

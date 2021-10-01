@@ -25,9 +25,10 @@ public class Purchase {
 		 request.setAttribute("itemAttribute", new Item());
 		 //current products and their storage pulling from the db 
 		 int storage = 100 ; 
-		 Item iphone9 = new Item("iphone9Case", "13",storage, "https://cdn.webshopapp.com/shops/221036/files/297679314/fooncase-iphone-11-pro-phone-case-tropical-desire.jpg"); 
-		 Item iphone10 = new Item("iphone10Case", "13",storage,"https://m.media-amazon.com/images/I/61zUnyvNEML._AC_SX522_.jpg"); 
-		 Item iphone11 = new Item("iphone11Case", "13",storage, "https://cdn.shopify.com/s/files/1/1706/8353/products/here-comes-the-sun-colorblock-sunset-case-iphone-case-bold-iphone-12-pro-714397_800x.progressive.jpg?v=1631572203"); 
+		 request.setAttribute("storage", storage);
+		 Item iphone9 = new Item( 0); 
+		 Item iphone10 = new Item( 1); 
+		 Item iphone11 = new Item( 2); 
 		 
 		 
 		//pass all products info to .jsp
@@ -44,11 +45,34 @@ public class Purchase {
 		if (request.getSession().getAttribute("order") == null ) {
 			order = new Order(); 
 			
+			
 		}else {
 			order =(Order) request.getSession().getAttribute("order") ;
 		}
+		
+		
+		
+		
 		request.setAttribute("order", order);
-		 
+		request.getSession().setAttribute("order", order) ; 
+		
+		//check duplicate item in the cart
+		if(request.getSession().getAttribute("duplicateItem") ==null)
+		{
+			request.getSession().setAttribute("duplicateItem", "")   ;
+		}
+		
+		
+		//calculate total price
+		ArrayList<Item> itemsInCart = order.getItems() ; 
+		int sum =0; 
+		int cartSize = 0 ; 
+		for (Item item: itemsInCart) {
+			sum+=  item.getPriceById(item.getId())* item.getQuantity() ; 
+			cartSize += item.getQuantity() ; 
+		}
+		request.setAttribute("sum", sum) ; 
+		request.setAttribute("cartSize", cartSize);
 		return "OrderEntryForm";
 	}
 	
@@ -75,7 +99,7 @@ public class Purchase {
 		ArrayList<Item> items = order.getItems() ; 
 		int sum =0; 
 		for (Item item: items) {
-			sum+= Integer.parseInt(item.getPrice())* item.getQuantity() ; 
+			sum+=  item.getPriceById(item.getId())* item.getQuantity() ; 
 		}
 		request.setAttribute("sum", sum) ; 
 		request.setAttribute("order", order) ; 
@@ -92,12 +116,12 @@ public class Purchase {
 		request.setAttribute("greeting", "Thank you for your order! ") ; 
 		return "Confirmation";
 	}
-	
+//FIXME	
 	@RequestMapping(path = "/shoppingCart", method = RequestMethod.GET)
 	public String shoppingCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int storage =100 ;
 		Order order = (Order) request.getSession().getAttribute("order") ; 
-		request.setAttribute("order", order);
+		//request.setAttribute("order", order);
 		request.setAttribute("storage", storage);
 		request.setAttribute("itemNum", order.getItems().size() ); 
 	 
@@ -107,36 +131,34 @@ public class Purchase {
 	
 	@RequestMapping(path = "/addToCart", method = RequestMethod.POST)
 	public String addItemToCart(@ModelAttribute("JustAnAttributeName")Item itemInCart, HttpServletRequest request) {
-		Order order  ; 
-		if (request.getSession().getAttribute("order") == null ) {
-			order = new Order(); 
-			
-		}else {
-			order =(Order) request.getSession().getAttribute("order") ;
-		}
-		
-		if(itemInCart.getName() !=null && itemInCart.getPrice() !=null  ) {
-			
-			if(order.getItems().contains(itemInCart)) {
-				//update quantity
-				Item tempItem = order.getItems().get(order.getItems().indexOf(itemInCart)) ;
-				int newQuant = tempItem.getQuantity() +1; 
-				tempItem.setQuantity(newQuant) ; 
+		Order order =(Order) request.getSession().getAttribute("order") ; 
+		//set imagePath, name, price by id
+		int id = itemInCart.getId() ; 
+		String name = itemInCart.getNameById(id); 
+		int price = itemInCart.getPriceById(id); 
+		String imagePath = itemInCart.getImagePathById(id); 
+	    
+	    itemInCart.setName(name) ; 
+	    itemInCart.setPrice(price) ; 
+	    itemInCart.setImage(imagePath) ;
+	    itemInCart.setQuantity(1) ; 
+		//update order info
+			if(order.getItems().contains(itemInCart)) {	
+				//FIXME
+				//alert: already in the cart 
+				request.getSession().setAttribute("duplicateItem", itemInCart.getName())   ;
+				 
 			}else {
-				//set image path by name
-				String name = itemInCart.getName() ; 
-				String imagePath = itemInCart.getImagePathByName(name); 
-			    itemInCart.setImage(imagePath) ;
-
-				itemInCart.setQuantity(1) ; 
+				 
 				
 				order.getItems().add(itemInCart) ; 
+				request.getSession().setAttribute("duplicateItem", "")   ;
 			}
 			
-		} 
+		 
 		request.getSession().setAttribute("order", order );    
 		//FIXME
-		return "redirect:/purchase/shoppingCart ";
+		return "redirect:/purchase ";
 		}
 	 
 	
@@ -144,36 +166,45 @@ public class Purchase {
 	
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
-		//reset all item's images here 
+		//reset name, price, images here 
 		for (int i=0; i<order.getItems().size(); i++) {
-			String itemName = order.getItems().get(i).getName(); 
-			String path = order.getItems().get(i).getImagePathByName(itemName) ; 
-			 order.getItems().get(i).setImage(path);
+			
+			Item item = order.getItems().get(i) ; 
+			int id = item.getId() ; 
+			String name = item.getNameById(id) ; 
+			int price = item.getPriceById(id) ; 
+			String path = item.getImagePathById(id) ; 
+			item.setName(name) ; 
+			item.setPrice(price) ; 
+			item.setImage(path);
 		}
-		request.getSession().setAttribute("order", order);
+		
 		
 		String buttonTriggered = request.getParameter("button") ; 
 		if(buttonTriggered !=null) {
-		 
-			if(buttonTriggered.equals("Continue Shopping")) {
-				return "redirect:/purchase";
-			}else if(buttonTriggered.equals("Purchase")){
-				return "redirect:/purchase/shippingEntry";		
-			}  
+			request.getSession().setAttribute("order", order);
+			return "redirect:/purchase/shippingEntry";		
+ 
 		}
-		//delete
-		//update order 
+		 
+		request.getSession().setAttribute("duplicateItem", "")   ;
+		//delete or update quantity
+		 
 		int cartSize = order.getItems().size() ; 
 		for(int i=0; i<cartSize; i++) {
 			buttonTriggered = request.getParameter(String.valueOf(i)) ; 
 			System.out.print("testing-------" + buttonTriggered ) ; 
 			if(buttonTriggered !=null) {
+				 
+				//delete
 				order.getItems().remove(i) ; 
+				
 			}
-		}			 
-		 request.setAttribute("order", order) ; 
+		}	
+		 
+		 //request.setAttribute("order", order) ; 
 		 request.getSession().setAttribute("order", order);
-		 return "redirect:/purchase/shoppingCart";
+		 return "redirect:/purchase ";
 		 
 		
 	
