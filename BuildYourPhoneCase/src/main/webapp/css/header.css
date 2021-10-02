@@ -27,6 +27,7 @@ nav {
   background: #F8F8F8;
   font-size: 20px;
   position:fixed;
+  z-index: 1;
 }
 nav .navbar-left {
   float: left;
@@ -81,7 +82,7 @@ nav ul li a:hover {
   padding: 20px;
   overflow: auto; 
   max-height: 80%;
-   
+  z-index: 2;
   
 }
 .shopping-cart .shopping-cart-header {

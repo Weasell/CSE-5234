@@ -48,7 +48,7 @@
 
 
 <div class="container">
-  <div class="shopping-cart">
+  <div class="shopping-cart" style="display: none">
     <div class="shopping-cart-header">
       <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">${cartSize}</span>
       <div class="shopping-cart-total">
