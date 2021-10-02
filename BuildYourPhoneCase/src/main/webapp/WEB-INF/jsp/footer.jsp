@@ -5,13 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <style> 
-body{
-background: #4f4f59;
- 
+h4{
+	background-color: #4f4f59;
+	margin: 0px;
 }
 .copyright{
-text-align: center ;
-color: #ceced6;}
+	text-align: center ;
+	color: #ceced6;
+}
 </style>
   
 <title>Footer</title>
