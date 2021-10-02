@@ -11,6 +11,7 @@
 <style><%@include file="/css/BasicStyle.css"%></style>
 </head>
 <body>
+<jsp:include page="headerPartial.jsp" />
 <div class="content">
 <h2>${greeting} <br></h2>
 Your Order ID is : ${orderId}
@@ -20,5 +21,6 @@ Your Order ID is : ${orderId}
 	<input type="submit" value="Keep Shopping">
 </form:form>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -11,6 +11,7 @@
 <style><%@include file="/css/BasicStyle.css"%></style>
 </head>
 <body>
+<jsp:include page="headerPartial.jsp" />
 <div class="content"> 
 <h2>Here is your order summary</h2> <br>
 <h4>Your total cost is $${sum} </h4><br>
@@ -56,5 +57,6 @@ Payment Info:
 	<input type="submit" value="Confirm Your Order">
 </form:form>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>

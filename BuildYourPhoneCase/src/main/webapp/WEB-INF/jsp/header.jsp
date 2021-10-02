@@ -20,10 +20,27 @@
     <ul class="navbar-left">
       <li><a href="#">Home</a></li>
       <li><a href="#about">About</a></li>
+      
+      <li>
+      <div class="dropdown">
+  		<button class="dropbtn">Products</button>
+ 		 <div class="dropdown-content">
+  		<a href="/BuildYourPhoneCase/purchase">Phone Case</a>
+ 		 <a href="#">Product 2</a>
+  		<a href="/#">Product 3</a>
+ 		 </div>
+</div>
+      
+      
+      
+      </li>
+      
     </ul> <!--end navbar-left -->
 
     <ul class="navbar-right">
+     <li><a href="#about">ContactUs</a></li>
       <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">${cartSize}</span></a></li>
+      
     </ul> <!--end navbar-right -->
   </div> <!--end container -->
 </nav>
@@ -53,13 +70,13 @@
 	</c:if> 
     <c:forEach items="${order.items}" var="item" varStatus="loop">
      <li class="clearfix">
-     	<form:hidden path="items[${loop.index}].id" value="${item.id}"/>
-        <img src="${item.image }" alt="image" class="imageInCart" />
-        <span class="item-name"> ${item.name} </span>
+        <img src="${item.image }" alt="image"  />
+        <span class="item-name"> ${item.name} </span> 
         <span class="item-price">Unit Price: $${item.price}</span> <br>
         <span class="item-quantity">Quantity:<form:input  path="items[${loop.index}].quantity"  type="number" value="${item.quantity }" min="1" max="${storage}" /></span>
-        <input type="submit"   value="Update"   ><br>
-        <input type="submit" name="${loop.index}" value="Delete" >
+        <input type="submit"   value="Update"  ><br>
+        <input type="submit" name="${loop.index}" value="Delete"   >
+        <form:hidden path="items[${loop.index}].id" value="${item.id}"/>
         
       </li>
     </c:forEach>
@@ -70,28 +87,7 @@
     <script>document.getElementById("checkout").disabled = true;</script>
     </c:if> 
     
-   <!-- 
-      <li class="clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
-        <span class="item-name">Sony DSC-RX100M III</span>
-        <span class="item-price">$849.99</span>
-        <span class="item-quantity">Quantity: 01</span>
-      </li>
-
-      <li class="clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
-        <span class="item-name">KS Automatic Mechanic...</span>
-        <span class="item-price">$1,249.99</span>
-        <span class="item-quantity">Quantity: 01</span>
-      </li>
-
-      <li class="clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg" alt="item1" />
-        <span class="item-name">Kindle, 6" Glare-Free To...</span>
-        <span class="item-price">$129.99</span>
-        <span class="item-quantity">Quantity: 01</span>
-      </li>
-    --> 
+    
     </ul>
  
    <!--   <a href="#" class="button">Checkout</a>  -->

@@ -8,34 +8,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Purchase</title>
-<style><%@include file="/css/BasicStyle.css"%></style> 
+<style><%@include file="/css/productPageStyle.css"%></style> 
 </head>
 <body>
 <jsp:include page="header.jsp" />
-<div class="content">
 
-<h2>Product List</h2>
+
+
+
  
- 
+ <div class="productList">
+
  <c:forEach items="${product.items}" var="item" varStatus="loop">
+  
+ <div class="gallery">
  	<form:form  modelAttribute="itemAttribute" method="post" action="purchase/addToCart">  
  		<form:hidden path="id" value="${item.id}"/>
-		<img class="responsive" src="${ item.image}">
- 		 <p>${item.name}</p>
- 		 <p>Unit Price: $${item.price}</p>
+		 <img   src="${ item.image}"> 
+ 		  <div class="descrip" >
+ 		  ${item.name}  <br>
+ 		  Unit Price: $${item.price} <br>
  		 
- 		<input type="submit" value="ADD TO CART">  
- 
-	</form:form>  
- 	
+ 		  <input type="submit" value="ADD TO CART">   
+ 		</div>
+	</form:form> 
+</div> 
  </c:forEach> 
  
   
  
  
-
-
 </div>
+
+ 
 
 <jsp:include page="footer.jsp" />
 

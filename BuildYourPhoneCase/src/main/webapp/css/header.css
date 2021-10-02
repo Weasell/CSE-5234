@@ -6,9 +6,10 @@
 }
 
 .onlyHeader {
- 
   font: 14px/22px "Lato", Arial, sans-serif;
   background: #6394F8;
+ 
+  
 }
 
 .lighter-text {
@@ -20,9 +21,12 @@
 }
 
 nav {
-  padding: 20px 0 40px 0;
+  
+  width:100% ;
+  padding: 20px 0 20px 0;
   background: #F8F8F8;
-  font-size: 16px;
+  font-size: 20px;
+  position:fixed;
 }
 nav .navbar-left {
   float: left;
@@ -42,10 +46,10 @@ nav ul li a:hover {
   color: black;
 }
 
-
+ 
 .container {
   margin: auto;
-  width: 80%;
+  width: 90%;
 }
 
 .badge {
@@ -63,15 +67,22 @@ nav ul li a:hover {
 
 .shopping-cart {
   
-  margin: 20px 0;
+  margin: 60px 0;
   float: right;
   background: white;
-  width: 320px;
-  position: absolute ; 
-  right: 10%;
+  
+  width: 20%;
+  min-width: 200px ;
+  
+  position: fixed; 
+  right: 5%;
    
   border-radius: 3px;
   padding: 20px;
+  overflow: auto; 
+  max-height: 80%;
+   
+  
 }
 .shopping-cart .shopping-cart-header {
   border-bottom: 1px solid #E8E8E8;
@@ -86,21 +97,25 @@ nav ul li a:hover {
 .shopping-cart .shopping-cart-items li {
   margin-bottom: 18px;
 }
+
 .shopping-cart .shopping-cart-items img {
   float: left;
   margin-right: 12px;
+  max-width: 30%;
+  max-height: auto;
 }
 .shopping-cart .shopping-cart-items .item-name {
   display: block;
   padding-top: 10px;
   font-size: 16px;
+  
 }
 .shopping-cart .shopping-cart-items .item-price {
-  color: #6394F8;
+  color:black;
   margin-right: 8px;
 }
 .shopping-cart .shopping-cart-items .item-quantity {
-  color: #ABB0BE;
+  color:black;
 }
 
 .shopping-cart:after {
@@ -145,12 +160,56 @@ nav ul li a:hover {
   clear: both;
 }
 
-.imageInCart{
-	max-width: 30%;
-  max-height: auto;
-}
 
 #warning{
 	color: red;
 	 
 }
+
+.inCartButton{
+	margin-right :30%;
+	float:right;
+}
+
+
+/* Drop down menu style */
+.dropbtn {
+  background-color: #F8F8F8;
+  color: #777777;
+  
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #777777;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #f1f1f1;
+}
+ 

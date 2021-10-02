@@ -22,27 +22,36 @@ public class Purchase {
 	 
 	@RequestMapping(method = RequestMethod.GET)
 	public String viewOrderEntryForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//need to initialize an item corresponding to the modelAttribute object inside the jsp file
 		 request.setAttribute("itemAttribute", new Item());
-		 //current products and their storage pulling from the db 
+		 
 		 int storage = 100 ; 
 		 request.setAttribute("storage", storage);
+		 
+		 //FIXME: current products and their storage pulling from the db 
 		 Item iphone9 = new Item( 0); 
 		 Item iphone10 = new Item( 1); 
 		 Item iphone11 = new Item( 2); 
+		 Item iphone12 = new Item( 3); 
+		 Item iphone13 = new Item( 4); 
+		 Item iphoneX = new Item( 5); 
 		 
-		 
-		//pass all products info to .jsp
+		//FIXME: pass all products info to .jsp
 		ArrayList<Item> items = new ArrayList<Item>() ; 	 
 		items .add(iphone9) ; 
 		items .add(iphone10) ; 
 		items .add(iphone11) ; 
+		items .add(iphone12) ; 
+		items .add(iphone13) ; 
+		items .add(iphoneX) ; 
 		Order product = new Order(); 
 		product.setItems(items );
 		request.setAttribute("product", product);
 		
-		//check if there is a anything stored in the cart 
+		//check if there is a anything stored in the cart 	
 		Order order  ; 
 		if (request.getSession().getAttribute("order") == null ) {
+			//initialize the session scope Order object for the first time 
 			order = new Order(); 
 			
 			
@@ -50,11 +59,9 @@ public class Purchase {
 			order =(Order) request.getSession().getAttribute("order") ;
 		}
 		
-		
-		
-		
 		request.setAttribute("order", order);
 		request.getSession().setAttribute("order", order) ; 
+		
 		
 		//check duplicate item in the cart
 		if(request.getSession().getAttribute("duplicateItem") ==null)
@@ -63,14 +70,10 @@ public class Purchase {
 		}
 		
 		
-		//calculate total price
-		ArrayList<Item> itemsInCart = order.getItems() ; 
-		int sum =0; 
-		int cartSize = 0 ; 
-		for (Item item: itemsInCart) {
-			sum+=  item.getPriceById(item.getId())* item.getQuantity() ; 
-			cartSize += item.getQuantity() ; 
-		}
+		//calculate total price and number of items in the cart
+		int sum = calculateTotalPrice(order); 
+		int cartSize = calculateCartSize(order); 
+		 
 		request.setAttribute("sum", sum) ; 
 		request.setAttribute("cartSize", cartSize);
 		return "OrderEntryForm";
@@ -91,16 +94,13 @@ public class Purchase {
 	
 	@RequestMapping(path = "/viewOrder", method = RequestMethod.GET)
 	public String viewOder(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//get info from session scope model
 		Order order = (Order) request.getSession().getAttribute("order") ; 
 		ShippingInfo shippingInfo = (ShippingInfo) request.getSession().getAttribute("shippingInfo") ; 
 		PaymentInfo paymentInfo = (PaymentInfo) request.getSession().getAttribute("paymentInfo") ; 
 		
 		//calculate total price 
-		ArrayList<Item> items = order.getItems() ; 
-		int sum =0; 
-		for (Item item: items) {
-			sum+=  item.getPriceById(item.getId())* item.getQuantity() ; 
-		}
+		int sum = calculateTotalPrice( order) ; 
 		request.setAttribute("sum", sum) ; 
 		request.setAttribute("order", order) ; 
 		request.setAttribute("shippingInfo", shippingInfo) ; 
@@ -112,52 +112,33 @@ public class Purchase {
 	
 	@RequestMapping(path = "/viewConfirmation", method = RequestMethod.GET)
 	public String viewConfirmation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//FIXME
 		request.setAttribute("orderId", "123456") ; 
 		request.setAttribute("greeting", "Thank you for your order! ") ; 
 		return "Confirmation";
 	}
-//FIXME	
-	@RequestMapping(path = "/shoppingCart", method = RequestMethod.GET)
-	public String shoppingCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int storage =100 ;
-		Order order = (Order) request.getSession().getAttribute("order") ; 
-		//request.setAttribute("order", order);
-		request.setAttribute("storage", storage);
-		request.setAttribute("itemNum", order.getItems().size() ); 
-	 
-		return "shoppingCart";
-	}
+ 
 	
 	
 	@RequestMapping(path = "/addToCart", method = RequestMethod.POST)
 	public String addItemToCart(@ModelAttribute("JustAnAttributeName")Item itemInCart, HttpServletRequest request) {
 		Order order =(Order) request.getSession().getAttribute("order") ; 
 		//set imagePath, name, price by id
-		int id = itemInCart.getId() ; 
-		String name = itemInCart.getNameById(id); 
-		int price = itemInCart.getPriceById(id); 
-		String imagePath = itemInCart.getImagePathById(id); 
-	    
-	    itemInCart.setName(name) ; 
-	    itemInCart.setPrice(price) ; 
-	    itemInCart.setImage(imagePath) ;
+		setFullItemInfo(itemInCart) ;
 	    itemInCart.setQuantity(1) ; 
 		//update order info
-			if(order.getItems().contains(itemInCart)) {	
-				//FIXME
+			if(order.getItems().contains(itemInCart)) {			 
 				//alert: already in the cart 
 				request.getSession().setAttribute("duplicateItem", itemInCart.getName())   ;
 				 
 			}else {
-				 
-				
+				//add new selected item into the cart			
 				order.getItems().add(itemInCart) ; 
 				request.getSession().setAttribute("duplicateItem", "")   ;
-			}
-			
+			}		
 		 
 		request.getSession().setAttribute("order", order );    
-		//FIXME
+		 
 		return "redirect:/purchase ";
 		}
 	 
@@ -166,43 +147,34 @@ public class Purchase {
 	
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
-		//reset name, price, images here 
+		//reset name, price, images by id
 		for (int i=0; i<order.getItems().size(); i++) {
-			
 			Item item = order.getItems().get(i) ; 
-			int id = item.getId() ; 
-			String name = item.getNameById(id) ; 
-			int price = item.getPriceById(id) ; 
-			String path = item.getImagePathById(id) ; 
-			item.setName(name) ; 
-			item.setPrice(price) ; 
-			item.setImage(path);
+			setFullItemInfo(item) ;
+			 
 		}
 		
-		
+	
 		String buttonTriggered = request.getParameter("button") ; 
+		//check if button "checkout" is pressed 
 		if(buttonTriggered !=null) {
 			request.getSession().setAttribute("order", order);
 			return "redirect:/purchase/shippingEntry";		
- 
 		}
-		 
+		
+		//remove the duplicate item warning from the UI
 		request.getSession().setAttribute("duplicateItem", "")   ;
-		//delete or update quantity
-		 
+		
+		//delete or update quantity	 
 		int cartSize = order.getItems().size() ; 
 		for(int i=0; i<cartSize; i++) {
 			buttonTriggered = request.getParameter(String.valueOf(i)) ; 
-			System.out.print("testing-------" + buttonTriggered ) ; 
-			if(buttonTriggered !=null) {
-				 
+			if(buttonTriggered !=null) { 
 				//delete
-				order.getItems().remove(i) ; 
-				
+				order.getItems().remove(i) ; 			
 			}
 		}	
 		 
-		 //request.setAttribute("order", order) ; 
 		 request.getSession().setAttribute("order", order);
 		 return "redirect:/purchase ";
 		 
@@ -212,7 +184,6 @@ public class Purchase {
 	@RequestMapping(path = "/submitShipping", method = RequestMethod.POST)
 	public String submitShipping(@ModelAttribute("shippingInfo") ShippingInfo shippingInfo, HttpServletRequest request) {
 		request.getSession().setAttribute("shippingInfo", shippingInfo);
-		//System.out.print("------------TEST ------------"+ shippingInfo.getName()) ; 
 		
 		return "redirect:/purchase/paymentEntry";
 		}
@@ -221,7 +192,6 @@ public class Purchase {
 	@RequestMapping(path = "/submitPayment", method = RequestMethod.POST)
 	public String submitPayment(@ModelAttribute("paymentInfo")  PaymentInfo paymentInfo, HttpServletRequest request) {
 		request.getSession().setAttribute("paymentInfo", paymentInfo);
-		//System.out.print("------------TEST ------------"+ paymentInfo.getCardNum()) ; 
 		 
 		return "redirect:/purchase/viewOrder";
 		}
@@ -240,11 +210,43 @@ public class Purchase {
 	
 	@RequestMapping(path = "/keepShopping", method = RequestMethod.POST)
 	public String keepShopping(  HttpServletRequest request) {
-		 
 		return "redirect:/purchase";
 		}
 	
 	
+	
+//Helper method
+	
+	//FIXME
+	private void setFullItemInfo(Item item) {
+		int id = item.getId() ; 
+		String name = item.getNameById(id); 
+		int price = item.getPriceById(id); 
+		String imagePath = item.getImagePathById(id); 
+	    
+	    item.setName(name) ; 
+	    item.setPrice(price) ; 
+	    item.setImage(imagePath) ;
+		
+	}
+	
+	private int calculateTotalPrice(Order order) {
+		ArrayList<Item> items = order.getItems() ; 
+		int sum =0; 
+		for (Item item: items) {
+			sum+=  item.getPriceById(item.getId())* item.getQuantity() ; 
+		}
+		return sum ;
+	}
+	
+	private int calculateCartSize(Order order) {
+		ArrayList<Item> items = order.getItems() ; 
+		int size =0; 
+		for (Item item: items) {
+			size+=  item.getQuantity() ; 
+		}
+		return size ;
+	}
 	
 	
 	

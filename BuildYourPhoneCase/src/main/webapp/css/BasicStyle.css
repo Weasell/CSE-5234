@@ -9,11 +9,17 @@
 
 table, th, td {
   border: 1px solid black;
+  
+  
+}
+table{
+	margin-left: auto;
+  margin-right: auto;
 }
 
-
 body{
-	
+  
+  min-height: 1200px;
   background: #555;
 }
 
@@ -23,14 +29,20 @@ hr{
 	margin-left:0 ; 
 }
 .content {
-  max-width: 500px;
+  width: 80%;
   margin: auto;
   background: white;
   padding: 10px;
+  text-align: center;
+  
 }
 
 .responsive {
   max-width: 50%;
   max-height: auto;
  
+}
+
+.content{
+	padding-top: 80px;
 }

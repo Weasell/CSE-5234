@@ -10,6 +10,7 @@
 <title>Shipping Info</title>
 </head>
 <body>
+<jsp:include page="headerPartial.jsp" />
 <div class="content"> 
 <h2>Shipping Info</h2>
 <form:form  modelAttribute="shippingInfo" method="post" action="submitShipping">   
@@ -28,6 +29,7 @@
  <input type="submit" value="Add Shipping Info"> 
 </form:form>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>
  

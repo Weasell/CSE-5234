@@ -132,16 +132,28 @@ public class Item {
 	private void loadData() {
 		//FIXME : images load from local cache
 				idImageDic.put(0, "https://cdn.webshopapp.com/shops/221036/files/297679314/fooncase-iphone-11-pro-phone-case-tropical-desire.jpg");
-				idImageDic.put(1,  "https://m.media-amazon.com/images/I/61zUnyvNEML._AC_SX522_.jpg");
+				idImageDic.put(1,  "https://m.media-amazon.com/images/I/418I24uGLlL.jpg");
 				idImageDic.put(2,   "https://cdn.shopify.com/s/files/1/1706/8353/products/here-comes-the-sun-colorblock-sunset-case-iphone-case-bold-iphone-12-pro-714397_800x.progressive.jpg?v=1631572203");
+				idImageDic.put(3,"https://static.gibson.com/product-images/Gibson/APHL/APHL-IPXXS.png");
+				idImageDic.put(4,"https://cdn-image02.casetify.com/usr/16571/16546571/~v30/13084976_iphone-x__color_silver_16000304.png.350x350-w.m80.jpg");
+				idImageDic.put(5,"https://cdn.trendhunterstatic.com/thumbs/make-my-case.jpeg");
+				
 				//FIXME: get from db
 				idNameDic.put(0, "iphone9Case") ; 
 				idNameDic.put(1, "iphone10Case") ; 
-				idNameDic.put(2, "iphone10Case") ; 
+				idNameDic.put(2, "iphone11Case") ; 
+				idNameDic.put(3, "iphone12Case") ; 
+				idNameDic.put(4, "iphone13Case") ; 
+				idNameDic.put(5, "iphoneXCase") ; 
 				
 				idPriceDic.put(0, 20) ; 
 				idPriceDic.put(1, 25) ; 
 				idPriceDic.put(2, 30) ; 
+				idPriceDic.put(3, 30) ; 
+				idPriceDic.put(4, 30) ; 
+				idPriceDic.put(5, 30) ; 
+				 
+				 
 		
 	}
 

@@ -1,0 +1,48 @@
+@charset "UTF-8";
+*{
+    margin-top: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+
+
+ 
+body{
+	margin: 0;
+  background: #555;
+}
+
+
+.productList {
+  padding-top: 100px;
+  margin:auto;
+  max-width: 80%;
+  min-height:1200px;
+ 
+  background: white;
+  text-align: center;
+  
+  overflow:auto;
+  
+}
+
+.gallery{
+	margin:5px;
+	border:1px solide #ccc;
+	float:left; 
+	width: 30%; 
+	
+}
+
+ 
+.gallery img{
+	 width: 100%;
+	 height: auto ;
+	 object-fit: cover;
+  
+	 
+}
+ 
+ 

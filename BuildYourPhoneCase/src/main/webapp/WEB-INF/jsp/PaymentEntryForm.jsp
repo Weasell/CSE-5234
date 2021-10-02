@@ -10,6 +10,7 @@
 <title>Payment Info</title>
 </head>
 <body>
+<jsp:include page="headerPartial.jsp" />
 <div class="content"> 
 <h2>Payment Info</h2>
 <form:form  modelAttribute="paymentInfo" method="post" action="submitPayment">   
@@ -24,6 +25,7 @@
   <input type="submit" value="Add Payment Info"> 
 </form:form>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>
  
