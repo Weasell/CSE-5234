@@ -25,7 +25,8 @@
 						<p class="display-5 text-white mb-4">Quickly design and
 							customize your phone case!</p>
 						<div>
-							<img src="images/picture1.jpg" class="d-block w-100" alt="...">
+							<img src="images/homepage_pic.png" class="d-block w-100"
+								alt="...">
 						</div>
 					</div>
 				</div>
@@ -48,33 +49,39 @@
 						87W USB–C Power Adapter to charge your iOS device, and even take
 						advantage of the fast–charging feature on iPad Pro, iPhone 8,
 						iPhone 8 Plus, and iPhone X.</p>
-					<a class="text-decoration-none" href="#!"> Buy it now! </a>
+					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase"> Buy it now! </a>
 				</div>
 				<div class="col-lg-4 mb-5 mb-lg-0">
-					<h2 class="h4 fw-bolder">Featured title</h2>
-					<p>Paragraph of text beneath the heading to explain the
-						heading. We'll add onto it with another sentence and probably just
-						keep going until we run out of words.</p>
-					<a class="text-decoration-none" href="#!"> Call to action <i
-						class="bi bi-arrow-right"></i>
-					</a>
+					<div>
+						<img src="images/iphone_our_case.png" class="d-block w-100"
+							alt="...">
+					</div>
+					<h2 class="h4 fw-bolder">Our Case</h2>
+					<p>Exceeds Military Standards</p>
+					<p>Surpasses US military drop test standard (MIL-STD 810G),
+						absorbs impact of over 11 feet</p>
+					<p>Honeycomb Structure</p>
+					<p>A hexagonal pattern lines the inner surfaces of our case,
+						improving shock absorption by up to 10%</p>
+
+					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase"> Buy it now! </a>
+
 				</div>
 				<div class="col-lg-4">
 					<div>
-						<img src="images/anonymous.png" class="d-block w-100" alt="...">
+						<img src="images/build_your_own_case.png" class="d-block w-100" alt="...">
 					</div>
-					<h2 class="h4 fw-bolder">About us</h2>
-					<p>Since our beginnings, our design concepts have always been
-						based on creative ingenuity. We continue to develop innovative
-						products, while maintaining sustainability as the basis of our
-						mission. We've reached a level of aesthetic design that becomes an
-						extension of the user through their own style of personal
-						creativity - revolutionizing the mobile accessories industry.</p>
+					<h2 class="h4 fw-bolder">Build Your Own Case</h2>
+					<p>Our phones go with us everywhere and are often the first
+						things we look at in the morning or before we go to sleep. Let
+						your phone case bring a smile to your face every time you look at
+						it! Design a custom iPhone case with your favorite photos.</p>
+					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase"> Buy it now! </a>
 				</div>
 			</div>
 		</div>
 	</section>
-	
-<jsp:include page="footer.jsp" />
+
+	<jsp:include page="footer.jsp" />
 </body>
 </html>
