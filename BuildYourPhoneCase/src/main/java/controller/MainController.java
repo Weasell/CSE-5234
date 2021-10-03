@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import model.Order;
 import model.ShippingInfo;
 
 @Controller
@@ -16,12 +17,16 @@ import model.ShippingInfo;
 
 public class MainController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String viewHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception {		 
+	public String viewHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception {	
+		Order order = (Order)request.getSession().getAttribute("order");
+		request.setAttribute("order", order);
 		return "home";
 	}
 	
 	@RequestMapping(path = "/about", method = RequestMethod.GET)
 	public String viewAboutUs(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Order order = (Order)request.getSession().getAttribute("order");
+		request.setAttribute("order", order);
 		return "about";
 	}
 }

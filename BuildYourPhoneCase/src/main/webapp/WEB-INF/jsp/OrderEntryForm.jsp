@@ -23,13 +23,13 @@
   
  <div class="gallery">
  	<form:form  modelAttribute="itemAttribute" method="post" action="purchase/addToCart">  
- 		<form:hidden path="id" value="${item.id}"/>
+ 		<form:hidden path="id" value="${item.id}"  id='id'/>
 		 <img   src="${ item.image}"> 
  		  <div class="descrip" >
  		  ${item.name}  <br>
  		  Unit Price: $${item.price} <br>
  		 
- 		  <input type="submit" value="ADD TO CART">   
+ 		  <input type="submit" value="ADD TO CART" id="addToCart">   
  		</div>
 	</form:form> 
 </div> 
@@ -43,6 +43,8 @@
  
 
 <jsp:include page="footer.jsp" />
+
+ 
 
 </body>
 </html>
