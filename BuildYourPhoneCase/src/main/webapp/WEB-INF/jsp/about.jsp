@@ -39,7 +39,7 @@
 
 					<!-- Button -->
 					<p class="mb-0">
-						<a href="#" target="_blank" class="btn btn-primary btn-circled">
+						<a href="/BuildYourPhoneCase/contactus" target="_blank" class="btn btn-primary btn-circled">
 							Contact us </a>
 					</p>
 				</div>

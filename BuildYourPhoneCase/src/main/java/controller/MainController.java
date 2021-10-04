@@ -29,4 +29,11 @@ public class MainController {
 		request.setAttribute("order", order);
 		return "about";
 	}
+	@RequestMapping(path = "/contactus", method = RequestMethod.GET)
+	public String viewContactUS(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		Order order = (Order)request.getSession().getAttribute("order");
+//		request.setAttribute("order", order);
+		return "ContactUs";
+	}
+	
 }
