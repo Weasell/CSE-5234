@@ -70,7 +70,7 @@
 	</c:if> 
     <c:forEach items="${order.items}" var="item" varStatus="loop">
      <li class="clearfix">
-        <img src="${item.image }" alt="image"  />
+        <img src="${item.image}" alt="image" />
         <span class="item-name"> ${item.name} </span> 
         <span class="item-price">Unit Price: $${item.price}</span> <br>
         <span class="item-quantity">Quantity:<form:input  path="items[${loop.index}].quantity"  type="number" value="${item.quantity }" min="1" max="${storage}" /></span>

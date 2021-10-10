@@ -1,32 +1,24 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Order {
-	
-	ArrayList<Item> items = new ArrayList<Item>();
-	
+	List<Item> items;
 
 	public Order() {
-		
+		items = new ArrayList<Item>();
 	}
-	 
-	 
-
-	public ArrayList<Item> getItems() {
+	
+	public List<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(ArrayList<Item> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 
 	@Override
 	public String toString() {
-		
 		return "Order [items=" + items + "]";
 	}
-	
-	
-
 }
