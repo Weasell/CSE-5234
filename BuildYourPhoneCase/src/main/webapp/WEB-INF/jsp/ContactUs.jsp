@@ -15,10 +15,10 @@
 </head>
 <body>
 <%@include file = "header.jsp"%>
+<!-- <br>
 <br>
-<br>
-<br>
-<section class="mb-4 mx-5">
+<br> -->
+<section class="mb-4 mx-5" style = "padding-top: 80px">
     <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
     <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within
         a matter of hours to help you.</p>
