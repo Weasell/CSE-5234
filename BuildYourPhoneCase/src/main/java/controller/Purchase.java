@@ -93,8 +93,13 @@ public class Purchase {
 	@RequestMapping(path = "/viewConfirmation", method = RequestMethod.GET)
 	public String viewConfirmation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// FIXME
-		request.setAttribute("orderId", "123456");
+
+		//send order info to microservice and get confirmatin number 
+		String confirmNum = serviceFacade.orderProcess((Order)request.getSession().getAttribute("order")) ;
+		request.setAttribute("orderId", confirmNum);
 		request.setAttribute("greeting", "Thank you for your order! ");
+		// stop session
+		request.getSession().invalidate();
 		return "Confirmation";
 	}
 
@@ -105,7 +110,7 @@ public class Purchase {
 		int id = itemInCart.getId();
 		itemInCart = serviceFacade.getItemById(id);
 		itemInCart.setAvailableQuantity(1);
-		System.out.print(itemInCart);
+		 
 		// update order info
 		if (order.getItems().contains(itemInCart)) {
 			// alert: already in the cart
@@ -176,8 +181,7 @@ public class Purchase {
 
 	@RequestMapping(path = "/confirmOrder", method = RequestMethod.POST)
 	public String confirmation(HttpServletRequest request) {
-		// stop session
-		request.getSession().invalidate();
+		
 		return "redirect:/purchase/viewConfirmation";
 	}
 
@@ -189,7 +193,6 @@ public class Purchase {
 //Helper method
 
 	// FIXME
-	 
 
 	private double calculateTotalPrice(Order order) {
 		List<Item> items = order.getItems();

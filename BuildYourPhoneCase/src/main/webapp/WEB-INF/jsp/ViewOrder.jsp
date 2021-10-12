@@ -21,7 +21,7 @@ Order Info:
 <table>
 	<c:forEach items="${order.items}" var="item" varStatus="loop">
 		<tr>
-			<td><img class="responsive" src="${item.picURL}"></td>
+			<td><img class="responsive" src="${pageContext.request.contextPath}/${item.picURL}"></td>
 			<td>Item Name: <c:out value="${item.name}"/></td>
 			<td>Item Price: <c:out value="$${item.price}"/></td>
 			<td>Quantity: <c:out value="${item.availableQuantity}" /></td>
