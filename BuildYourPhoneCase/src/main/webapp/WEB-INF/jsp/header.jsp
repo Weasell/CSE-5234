@@ -70,10 +70,10 @@
 	</c:if> 
     <c:forEach items="${order.items}" var="item" varStatus="loop">
      <li class="clearfix">
-        <img src="${item.image}" alt="image" />
+        <img src="${item.picURL}" alt="image" />
         <span class="item-name"> ${item.name} </span> 
         <span class="item-price">Unit Price: $${item.price}</span> <br>
-        <span class="item-quantity">Quantity:<form:input  path="items[${loop.index}].quantity"  type="number" value="${item.quantity }" min="1" max="${storage}" /></span>
+        <span class="item-quantity">Quantity:<form:input  path="items[${loop.index}].availableQuantity"  type="number" value="${item.availableQuantity }" min="1" max="${storage}" /></span>
         <input type="submit"   value="Update"  ><br>
         <input type="submit" name="${loop.index}" value="Delete"   >
         <form:hidden path="items[${loop.index}].id" value="${item.id}"/>

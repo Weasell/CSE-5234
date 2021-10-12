@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import model.Order;
 import model.PaymentInfo;
-import model.ServiceFacade;
 import model.Item;
 import model.ShippingInfo;
+import utils.ServiceFacade;
 
 @Controller
 @RequestMapping("/purchase")
 public class Purchase {
 
+	ServiceFacade serviceFacade = new ServiceFacade();
 	@RequestMapping(method = RequestMethod.GET)
 	public String viewOrderEntryForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// need to initialize an item corresponding to the modelAttribute object inside
@@ -28,7 +29,7 @@ public class Purchase {
 		int storage = 100;
 		request.setAttribute("storage", storage);
 		
-		ServiceFacade serviceFacade = new ServiceFacade();
+		
 		List<Item> items = serviceFacade.getAvailableItems();
 		Order product = new Order();
 		product.setItems(items);
@@ -101,8 +102,10 @@ public class Purchase {
 	public String addItemToCart(@ModelAttribute("JustAnAttributeName") Item itemInCart, HttpServletRequest request) {
 		Order order = (Order) request.getSession().getAttribute("order");
 		// set imagePath, name, price by id
-		setFullItemInfo(itemInCart);
-		itemInCart.setQuantity(1);
+		int id = itemInCart.getId();
+		itemInCart = serviceFacade.getItemById(id);
+		itemInCart.setAvailableQuantity(1);
+		System.out.print(itemInCart);
 		// update order info
 		if (order.getItems().contains(itemInCart)) {
 			// alert: already in the cart
@@ -122,11 +125,14 @@ public class Purchase {
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
 		// reset name, price, images by id
+		List<Item> items =new ArrayList<Item>() ;
 		for (int i = 0; i < order.getItems().size(); i++) {
-			Item item = order.getItems().get(i);
-			setFullItemInfo(item);
-
+			Item item = serviceFacade.getItemById(order.getItems().get(i).getId()) ; 
+			item.setAvailableQuantity(order.getItems().get(i).getAvailableQuantity()) ; 
+			items.add(item) ; 		
+			
 		}
+		order.setItems(items) ; 
 
 		String buttonTriggered = request.getParameter("button");
 		// check if button "checkout" is pressed
@@ -183,24 +189,14 @@ public class Purchase {
 //Helper method
 
 	// FIXME
-	private void setFullItemInfo(Item item) {
-		int id = item.getId();
-		String name = item.getName();
-		double price = item.getPrice();
-		String imagePath = item.getImage();
-
-		item.setName(name);
-		item.setPrice(price);
-		item.setImage(imagePath);
-	}
+	 
 
 	private double calculateTotalPrice(Order order) {
 		List<Item> items = order.getItems();
 		double sum = 0.0;
 		for (Item item : items) {
 			double currentPrice = item.getPrice();
-			double currentQuan = (double) item.getQuantity();
-			// sum += item.getPrice() * (double)item.getQuantity() ;
+			double currentQuan = (double) item.getAvailableQuantity();
 			sum += currentPrice * currentQuan;
 		}
 		return sum;
@@ -210,7 +206,7 @@ public class Purchase {
 		List<Item> items = order.getItems();
 		int size = 0;
 		for (Item item : items) {
-			size += item.getQuantity();
+			size += item.getAvailableQuantity();
 		}
 		return size;
 	}

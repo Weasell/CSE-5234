@@ -22,14 +22,11 @@
 				<form:form modelAttribute="itemAttribute" method="post"
 					action="purchase/addToCart">
 					<form:hidden path="id" value="${item.id}" id='id' />
-					<img src="${item.image}">
-					<form:hidden path="image" value="${item.image}"/>
+					<img src="${item.picURL}">
 					<div class="descrip">
 						${item.name}
-						<form:hidden path="name" value="${item.name}"/>
 						<br>
 						Unit Price: $${item.price}
-						<form:hidden path="price" value="${item.price}"/>
 						<br>
 						<input type="submit" value="ADD TO CART" id="addToCart">
 					</div>
