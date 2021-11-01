@@ -79,7 +79,6 @@ public class Purchase {
 		Order order = (Order) request.getSession().getAttribute("order");
 		ShippingInfo shippingInfo = (ShippingInfo) request.getSession().getAttribute("shippingInfo");
 		PaymentInfo paymentInfo = (PaymentInfo) request.getSession().getAttribute("paymentInfo");
-
 		// calculate total price
 		double sum = calculateTotalPrice(order);
 		request.setAttribute("sum", sum);
@@ -95,6 +94,12 @@ public class Purchase {
 		// FIXME
 
 		//send order info to microservice and get confirmatin number 
+		Order order = (Order) request.getSession().getAttribute("order");
+		ShippingInfo shippingInfo = (ShippingInfo) request.getSession().getAttribute("shippingInfo");
+		PaymentInfo paymentInfo = (PaymentInfo) request.getSession().getAttribute("paymentInfo");
+		order.setPaymentInfo(paymentInfo);
+		order.setShippingInfo(shippingInfo);
+		
 		String confirmNum = serviceFacade.orderProcess((Order)request.getSession().getAttribute("order")) ;
 		request.setAttribute("orderId", confirmNum);
 		request.setAttribute("greeting", "Thank you for your order! ");
@@ -134,8 +139,7 @@ public class Purchase {
 		for (int i = 0; i < order.getItems().size(); i++) {
 			Item item = serviceFacade.getItemById(order.getItems().get(i).getId()) ; 
 			item.setAvailableQuantity(order.getItems().get(i).getAvailableQuantity()) ; 
-			items.add(item) ; 		
-			
+			items.add(item) ; 			
 		}
 		order.setItems(items) ; 
 

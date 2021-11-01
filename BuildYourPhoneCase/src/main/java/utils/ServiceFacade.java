@@ -55,15 +55,12 @@ public class ServiceFacade {
 		WebTarget webTarget = client.target(INV_MGMT_GET_ITEM_BY_ID_URI).queryParam("id", id);
 		Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
 		JsonObject responseJsonObj = builder.get(JsonObject.class);
-
 		String name =responseJsonObj.getString("name") ; 
 		int availableQuantity = responseJsonObj.getInt("availableQuantity") ; 
 		double price =responseJsonObj.getJsonNumber("price").doubleValue() ; 
 		String picURL = responseJsonObj.getString("picURL");
 		 
 		Item item = new Item(id, name, availableQuantity,price, picURL);
-		 
-
 		client.close();
 		return item;
 	}
