@@ -11,13 +11,17 @@ h4{
 }
 .copyright{
 	text-align: center ;
-	color: #ceced6;
+	color: rgba(0,0,0,.7);
 }
 </style>
   
 <title>Footer</title>
 </head>
-<body>
+<!-- <body>
 <h4 class="copyright">Copyright @ 2021 XXXXX, Limited All rights reserved. </h4>
-</body>
+</body> -->
+<body >
+<p class="copyright" >
+    © Copyright 2021 OSUCSE. All rights reserved.
+</p>
 </html>

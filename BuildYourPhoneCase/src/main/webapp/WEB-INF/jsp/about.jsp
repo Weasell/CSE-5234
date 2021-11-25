@@ -5,11 +5,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>About us</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <body>
 	<jsp:include page="header.jsp" />
 	<br>
@@ -19,8 +16,6 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<div>
 		<!-- Content -->
 		<div class="container">
 			<div class="row align-items-center">
@@ -44,16 +39,14 @@
 					</p>
 				</div>
 				<div class="col-lg-5 d-none d-lg-block">
-					<div class="banner-img-block">
-						<img src="images/anonymous.png" alt="banner-img" class="img-fluid">
+					<div class="banner-img-block pb-5">
+						<img src="images/about us.jpeg" alt="banner-img" class="img-fluid">
 					</div>
 				</div>
 			</div>
 			<!-- / .row -->
 		</div>
 		<!-- / .container -->
-
-	</div>
 
 </body>
 </html>

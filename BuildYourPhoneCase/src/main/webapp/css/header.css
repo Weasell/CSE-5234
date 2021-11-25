@@ -101,8 +101,8 @@ nav ul li a:hover {
 .shopping-cart .shopping-cart-items img {
   float: left;
   margin-right: 12px;
-  max-width: 30%;
-  max-height: auto;
+/*   max-width: 30% ; 
+ */  max-height: auto;
 }
 .shopping-cart .shopping-cart-items .item-name {
   display: block;

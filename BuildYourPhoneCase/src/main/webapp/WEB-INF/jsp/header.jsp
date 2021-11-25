@@ -65,23 +65,31 @@
 	 
 	</c:if> 
     <c:if test="${ cartSize == 0}">
-		<p>Your Cart is Empty</p>
-	 
+		<p>Your Cart is Empty.</p>	 
 	</c:if> 
     <c:forEach items="${order.items}" var="item" varStatus="loop">
-     <li class="clearfix">
-        <img src="${item.picURL}" alt="image" />
-        <span class="item-name"> ${item.name} </span> 
-        <span class="item-price">Unit Price: $${item.price}</span> <br>
-        <span class="item-quantity">Quantity:<form:input  path="items[${loop.index}].availableQuantity"  type="number" value="${item.availableQuantity }" min="1" max="${storage}" /></span>
-        <input type="submit"   value="Update"  ><br>
-        <input type="submit" name="${loop.index}" value="Delete"   >
-        <form:hidden path="items[${loop.index}].id" value="${item.id}"/>
-        
+      <li class="clearfix row">
+      	 <div class = "col-sm-5"">
+         	<img src="${item.picURL}" alt="image"  class="img-responsive" width="100%" />
+         </div>
+         <div class = "col-sm-7">
+	         <h5 class="item-name"> ${item.name} </h5> 
+	         <h6 class="item-price">$${item.price}</h6>
+	         <div class="input-group mb-2 mr-sm-2">
+			    <div class="input-group-prepend">
+			      <div class="input-group-text">Qty:</div>
+			    </div>
+       			<form:input path="items[${loop.index}].availableQuantity"  class="form-control form-control-sm " type="number" value="${item.availableQuantity }" min="1" max="${storage}" />
+			  </div>			 
+			 <div class="input-group">
+			    <button class="btn btn-outline-info btn-sm" type="submit" value="Update">Update</button>
+			    <button class="btn btn-outline-danger btn-sm" type="submit" name="${loop.index}" value="Delete" >Delete</button>
+			 </div>
+		 </div>
+         <form:hidden path="items[${loop.index}].id" value="${item.id}"/>
       </li>
     </c:forEach>
-    <input type="submit" name="button" value="Checkout" id="checkout"> 
- 
+    <input type="submit" name="button" value="Checkout" id="checkout" class="btn btn-primary btn-block"> 
     </form:form>
      <c:if test="${ cartSize == 0}">
     <script>document.getElementById("checkout").disabled = true;</script>
