@@ -14,7 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </head>
 <body>
-<%@include file = "header.jsp"%>
+<jsp:include page="headerPartial.jsp" />
 <!-- <br>
 <br>
 <br> -->
@@ -57,7 +57,8 @@
                 </div>
             </form>
             <div class="text-center text-md-left">
-                <button id = "send" class = "btn btn-primary" aria-pressed="true">Send</button>
+               <button id = "send" class = "btn btn-primary" aria-pressed="true" onclick="BtnClicked()">Send</button>
+                <div id="onSendBtnClicked"></div> 
             </div>
         </div>
         <div class="col-md-3 text-center">
@@ -76,4 +77,10 @@
     </div>
 </section>
 </body>
+<script>
+function BtnClicked() {
+	var node = document.getElementById("onSendBtnClicked");
+	node.innerHTML = "<h5>Thank you for your message, we will contact you shortly! </h5>";
+}
+</script>
 </html>

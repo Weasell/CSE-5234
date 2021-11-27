@@ -23,6 +23,7 @@
 					action="purchase/addToCart">
 					<form:hidden path="id" value="${item.id}" id='id' />
 					<img src="${item.picURL}">
+					 
 					<div class="descrip">
 						<h5>${item.name}</h5>
 						<h6>$${item.price}<h6>

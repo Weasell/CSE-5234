@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<jsp:include page="header.jsp" />
+	<jsp:include page="headerPartial.jsp" />
 
 	<!-- Header-->
 	<header class="bg-dark py-5">

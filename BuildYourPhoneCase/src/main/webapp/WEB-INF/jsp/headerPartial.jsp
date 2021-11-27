@@ -18,8 +18,8 @@
   <nav>
   <div class="container">
     <ul class="navbar-left">
-      <li><a href="#">Home</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="/BuildYourPhoneCase/">Home</a></li>
+      <li><a href="about">About</a></li>
       
       <li>
       <div class="dropdown">
@@ -38,7 +38,7 @@
     </ul> <!--end navbar-left -->
 
     <ul class="navbar-right">
-     <li><a href="#about">ContactUs</a></li>
+     <li><a href="contactus">ContactUs</a></li>
       
       
     </ul> <!--end navbar-right -->

@@ -34,7 +34,7 @@ public class Purchase {
 		Order product = new Order();
 		product.setItems(items);
 		request.setAttribute("product", product);
-
+		 
 		// check if there is a anything stored in the cart
 		Order order;
 		if (request.getSession().getAttribute("order") == null) {
@@ -51,6 +51,7 @@ public class Purchase {
 		if (request.getSession().getAttribute("duplicateItem") == null) {
 			request.getSession().setAttribute("duplicateItem", "");
 		}
+		 
 
 		// calculate total price and number of items in the cart
 		double sum = calculateTotalPrice(order);
@@ -134,11 +135,27 @@ public class Purchase {
 
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
+		request.getSession().setAttribute("maxOrderNum", "");
 		// reset name, price, images by id
 		List<Item> items =new ArrayList<Item>() ;
 		for (int i = 0; i < order.getItems().size(); i++) {
 			Item item = serviceFacade.getItemById(order.getItems().get(i).getId()) ; 
+			int storage  = item.getAvailableQuantity() ; 
+			System.out.print(storage) ; 
+			int requestNum = order.getItems().get(i).getAvailableQuantity() ; 
+			
 			item.setAvailableQuantity(order.getItems().get(i).getAvailableQuantity()) ; 
+			//FIXME 
+			//check if we have enough storage
+			if(requestNum<=storage) {
+				item.setAvailableQuantity(requestNum) ; 
+				}else {
+				//alter the max number customers can buy
+				String message= "The max number of "+ item.getName()+" that you can buy is "+ storage; 
+			    request.getSession().setAttribute("maxOrderNum", message);
+				
+			}
+			
 			items.add(item) ; 			
 		}
 		order.setItems(items) ; 

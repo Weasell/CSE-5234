@@ -48,7 +48,7 @@
 
 
 <div class="container">
-  <div class="shopping-cart" style="display:none"> <!-- display:block -->
+  <div class="shopping-cart" style="display:block"> <!-- display:none -->
     <div class="shopping-cart-header">
       <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">${cartSize}</span>
       <div class="shopping-cart-total">
@@ -64,6 +64,11 @@
 		<p id="warning">${duplicateItem} has already been added into the cart</p>
 	 
 	</c:if> 
+	<c:if test="${maxOrderNum != ''}">
+	 	<p id="warning">${maxOrderNum}  </p>
+	 	 
+	</c:if> 
+	 
     <c:if test="${ cartSize == 0}">
 		<p>Your Cart is Empty.</p>	 
 	</c:if> 
@@ -91,9 +96,16 @@
     </c:forEach>
     <input type="submit" name="button" value="Checkout" id="checkout" class="btn btn-primary btn-block"> 
     </form:form>
+    
+    
      <c:if test="${ cartSize == 0}">
     <script>document.getElementById("checkout").disabled = true;</script>
     </c:if> 
+    
+	 <c:if test="${maxOrderNum != ''}">
+	 	 
+	 	<script>document.getElementById("checkout").disabled = true;</script>
+	</c:if> 
     
     
     </ul>
