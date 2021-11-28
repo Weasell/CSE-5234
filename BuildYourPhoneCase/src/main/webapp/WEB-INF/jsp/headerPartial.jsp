@@ -50,7 +50,6 @@
  
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
- <script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
-   
+  
 </body>
 </html>

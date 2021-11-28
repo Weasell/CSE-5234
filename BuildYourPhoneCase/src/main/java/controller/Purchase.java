@@ -6,8 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Order;
 import model.PaymentInfo;
@@ -51,6 +54,9 @@ public class Purchase {
 		if (request.getSession().getAttribute("duplicateItem") == null) {
 			request.getSession().setAttribute("duplicateItem", "");
 		}
+		if (request.getSession().getAttribute("maxOrderNum") == null) {
+			request.getSession().setAttribute("maxOrderNum", "");
+		}
 		 
 
 		// calculate total price and number of items in the cart
@@ -92,7 +98,7 @@ public class Purchase {
 
 	@RequestMapping(path = "/viewConfirmation", method = RequestMethod.GET)
 	public String viewConfirmation(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// FIXME
+		 
 
 		//send order info to microservice and get confirmatin number 
 		Order order = (Order) request.getSession().getAttribute("order");
@@ -100,7 +106,7 @@ public class Purchase {
 		PaymentInfo paymentInfo = (PaymentInfo) request.getSession().getAttribute("paymentInfo");
 		order.setPaymentInfo(paymentInfo);
 		order.setShippingInfo(shippingInfo);
-		
+		System.out.println(order) ;
 		String confirmNum = serviceFacade.orderProcess((Order)request.getSession().getAttribute("order")) ;
 		request.setAttribute("orderId", confirmNum);
 		request.setAttribute("greeting", "Thank you for your order! ");
@@ -135,6 +141,7 @@ public class Purchase {
 
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
+		boolean quantityAvail = true ; 
 		request.getSession().setAttribute("maxOrderNum", "");
 		// reset name, price, images by id
 		List<Item> items =new ArrayList<Item>() ;
@@ -151,19 +158,21 @@ public class Purchase {
 				item.setAvailableQuantity(requestNum) ; 
 				}else {
 				//alter the max number customers can buy
+				quantityAvail = false ;
 				String message= "The max number of "+ item.getName()+" that you can buy is "+ storage; 
 			    request.getSession().setAttribute("maxOrderNum", message);
 				
 			}
 			
-			items.add(item) ; 			
+			items.add(item) ; 	
 		}
 		order.setItems(items) ; 
 
 		String buttonTriggered = request.getParameter("button");
 		// check if button "checkout" is pressed
-		if (buttonTriggered != null) {
+		if (buttonTriggered != null && quantityAvail ) {
 			request.getSession().setAttribute("order", order);
+			System.out.println(order) ;
 			return "redirect:/purchase/shippingEntry";
 		}
 
@@ -176,11 +185,13 @@ public class Purchase {
 			buttonTriggered = request.getParameter(String.valueOf(i));
 			if (buttonTriggered != null) {
 				// delete
+				 request.getSession().setAttribute("maxOrderNum", "");
 				order.getItems().remove(i);
 			}
 		}
 
 		request.getSession().setAttribute("order", order);
+		
 		return "redirect:/purchase ";
 
 	}
@@ -213,7 +224,6 @@ public class Purchase {
 
 //Helper method
 
-	// FIXME
 
 	private double calculateTotalPrice(Order order) {
 		List<Item> items = order.getItems();
@@ -234,5 +244,29 @@ public class Purchase {
 		}
 		return size;
 	}
+	
+	
+	//ajax 
+	
+	//testing 
+	@ResponseBody
+	@RequestMapping(path = "/testing",  method = RequestMethod.POST)
+	public String testingMethod(@RequestBody String data) {  
+		System.out.println(data) ;
+		String result ="this is a new string for test" ;
+		 
+		return result;
 
+	}
+	//addToCart
+		@ResponseBody
+		@RequestMapping(path = "/addToCartAjax",  method = RequestMethod.POST)
+		public String addToCartAjax(@RequestBody String id ) {  
+			System.out.println(id) ;
+			
+			String result ="this is a new string for test" ;	
+			//show shopping cart, do in js 
+			return result;
+
+		}
 }

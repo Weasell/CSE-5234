@@ -21,19 +21,22 @@
 			<div class="gallery">
 				<form:form modelAttribute="itemAttribute" method="post"
 					action="purchase/addToCart">
-					<form:hidden path="id" value="${item.id}" id='id' />
+					<form:hidden path="id" value="${item.id}" id='item${item.id}' />
 					<img src="${item.picURL}">
 					 
 					<div class="descrip">
 						<h5>${item.name}</h5>
 						<h6>$${item.price}<h6>
-						<input class="btn btn-outline-primary btn-sm" type="submit" value="ADD TO CART" id="addToCart">
+						<input class="btn btn-outline-primary btn-sm" type="submit" value="ADD TO CART" id="addToCart${item.id}">
 					</div>
 				</form:form>
 			</div>
 		</c:forEach>
 	</div>
-
+ 
 	<jsp:include page="footer.jsp" />
+	
+ <script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
+   
 </body>
 </html>
