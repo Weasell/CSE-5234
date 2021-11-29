@@ -174,7 +174,7 @@ public class Purchase {
 				}else {
 				//alter the max number customers can buy
 				quantityAvail = false ;
-				String message= "The max number of "+ item.getName()+" that you can buy is "+ storage; 
+				String message= "The max number of "+ item.getName()+" that can be bought is "+ storage; 
 			    request.getSession().setAttribute("maxOrderNum", message);
 				
 			}

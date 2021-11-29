@@ -50,7 +50,7 @@
 						87W USB–C Power Adapter to charge your iOS device, and even take
 						advantage of the fast–charging feature on iPad Pro, iPhone 8,
 						iPhone 8 Plus, and iPhone X.</p>
-					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase"> Buy it now! </a>
+					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase?pageNum=2"> Buy it now! </a>
 				</div>
 				<div class="col-lg-4 mb-5 mb-lg-0">
 					<div>
@@ -65,7 +65,7 @@
 					<p>A hexagonal pattern lines the inner surfaces of our case,
 						improving shock absorption by up to 10%</p>
 
-					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase"> Buy it now! </a>
+					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase?pageNum=1"> Buy it now! </a>
 
 				</div>
 				<div class="col-lg-4">
@@ -77,7 +77,7 @@
 						things we look at in the morning or before we go to sleep. Let
 						your phone case bring a smile to your face every time you look at
 						it! Design a custom iPhone case with your favorite photos.</p>
-					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase"> Buy it now! </a>
+					<a class="text-decoration-none" href="/BuildYourPhoneCase/purchase?pageNum=3"> Buy it now! </a>
 				</div>
 			</div>
 		</div>
