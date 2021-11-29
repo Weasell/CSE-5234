@@ -25,9 +25,9 @@
       <div class="dropdown">
   		<button class="dropbtn">Products</button>
  		 <div class="dropdown-content">
-  		<a href="/BuildYourPhoneCase/purchase">Phone Case</a>
- 		 <a href="#">Product 2</a>
-  		<a href="/#">Product 3</a>
+  		<a href="/BuildYourPhoneCase/purchase?pageNum=1">Phone Case</a>
+ 		 <a href="/BuildYourPhoneCase/purchase?pageNum=2">Braid Phone Lanyard</a>
+  		<a href="/BuildYourPhoneCase/purchase?pageNum=3">Phone Holder</a>
  		 </div>
 </div>
       

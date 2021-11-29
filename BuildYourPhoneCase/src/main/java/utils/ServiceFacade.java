@@ -19,15 +19,15 @@ public class ServiceFacade {
 	private static String ORD_PROC_URI = "http://localhost:9080/order-processing/order";
 
 
-	public List<Item> getAvailableItems() {
+	public List<Item> getAvailableItems(int pageNum) {
 
 		List<Item> availableItems = new ArrayList<Item>();
 
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target(INV_MGMT_GET_INVENTORY_URI) ;
+		WebTarget webTarget = client.target(INV_MGMT_GET_INVENTORY_URI).queryParam("pageNum", pageNum ) ;
 		Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
 		JsonObject responseJsonObj = builder.get(JsonObject.class);
-
+		 
 
 		Iterator<JsonValue> it = responseJsonObj.getJsonArray("items").iterator();
 		while (it.hasNext()) {
@@ -37,7 +37,7 @@ public class ServiceFacade {
 			int availableQuantity = value.asJsonObject().getInt("availableQuantity") ; 
 			double price =value.asJsonObject().getJsonNumber("price").doubleValue() ; 
 			String picURL = value.asJsonObject().getString("picURL");
-			Item newItem = new Item(id, name, availableQuantity,price, picURL);
+			Item newItem = new Item(id, name, availableQuantity,price, picURL, pageNum);
 			 
 			availableItems.add(newItem);
 		}
@@ -48,30 +48,30 @@ public class ServiceFacade {
 	
 	
 	
-	public Item getItemById(int id) {
+	public Item getItemById(int id ) {
 		 
-
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target(INV_MGMT_GET_ITEM_BY_ID_URI).queryParam("id", id);
+		WebTarget webTarget = client.target(INV_MGMT_GET_ITEM_BY_ID_URI).queryParam("id", id );
 		Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
 		JsonObject responseJsonObj = builder.get(JsonObject.class);
+		
 		String name =responseJsonObj.getString("name") ; 
 		int availableQuantity = responseJsonObj.getInt("availableQuantity") ; 
 		double price =responseJsonObj.getJsonNumber("price").doubleValue() ; 
 		String picURL = responseJsonObj.getString("picURL");
-		 
-		Item item = new Item(id, name, availableQuantity,price, picURL);
+		int pageNum = responseJsonObj.getInt("pageNum") ; 
+		Item item = new Item(id, name, availableQuantity,price, picURL, pageNum);
 		client.close();
 		return item;
 	}
 	
 	
 	
-	public Item getItemByName(String name) {
+	public Item getItemByName(String name ) {
 		 
 
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target(INV_MGMT_GET_ITEM_BY_NAME_URI).queryParam("name", name);
+		WebTarget webTarget = client.target(INV_MGMT_GET_ITEM_BY_NAME_URI).queryParam("name", name );
 		Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
 		JsonObject responseJsonObj = builder.get(JsonObject.class);
 
@@ -79,7 +79,8 @@ public class ServiceFacade {
 		int availableQuantity = responseJsonObj.getInt("availableQuantity") ; 
 		double price =responseJsonObj.getJsonNumber("price").doubleValue() ; 
 		String picURL = responseJsonObj.getString("picURL");
-		Item item = new Item(id, name, availableQuantity,price, picURL);
+		int pageNum = responseJsonObj.getInt("pageNum") ; 
+		Item item = new Item(id, name, availableQuantity,price, picURL, pageNum);
 		 
 
 		client.close();

@@ -25,9 +25,9 @@
       <div class="dropdown">
   		<button class="dropbtn">Products</button>
  		 <div class="dropdown-content">
-  		<a href="/BuildYourPhoneCase/purchase">Phone Case</a>
- 		 <a href="#">Product 2</a>
-  		<a href="/#">Product 3</a>
+  		<a href="/BuildYourPhoneCase/purchase?pageNum=1">Phone Case</a>
+ 		 <a href="/BuildYourPhoneCase/purchase?pageNum=2">Braid Phone Lanyard</a>
+  		<a href="/BuildYourPhoneCase/purchase?pageNum=3">Phone Holder</a>
  		 </div>
 </div>
       
@@ -48,7 +48,7 @@
 
 
 <div class="container">
-  <div class="shopping-cart" style="display:none"> <!-- display:block -->
+  <div class="shopping-cart" style="display:block"> <!-- display:none -->
     <div class="shopping-cart-header">
       <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">${cartSize}</span>
       <div class="shopping-cart-total">
@@ -84,7 +84,7 @@
 			    <div class="input-group-prepend">
 			      <div class="input-group-text">Qty:</div>
 			    </div>
-       			<form:input path="items[${loop.index}].availableQuantity"  class="form-control form-control-sm " type="number" value="${item.availableQuantity }" min="1" max="${storage}" />
+       			<form:input path="items[${loop.index}].availableQuantity"  class="form-control form-control-sm " type="number" value="${item.availableQuantity }" min="1"   /> <!--max="${storage}" -->  
 			  </div>			 
 			 <div class="input-group">
 			    <button class="btn btn-outline-info btn-sm" type="submit" value="Update">Update</button>

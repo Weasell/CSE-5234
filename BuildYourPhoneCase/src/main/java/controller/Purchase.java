@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,23 +18,26 @@ import model.PaymentInfo;
 import model.Item;
 import model.ShippingInfo;
 import utils.ServiceFacade;
+import vo.cartInfo;
 
 @Controller
 @RequestMapping("/purchase")
 public class Purchase {
 
 	ServiceFacade serviceFacade = new ServiceFacade();
-	@RequestMapping(method = RequestMethod.GET)
-	public String viewOrderEntryForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	@RequestMapping( method = RequestMethod.GET)
+	public String viewOrderEntryForm(HttpServletRequest request, HttpServletResponse response, @RequestParam("pageNum") int pageNum) throws Exception {
 		// need to initialize an item corresponding to the modelAttribute object inside
 		// the jsp file
 		request.setAttribute("itemAttribute", new Item());
-
-		int storage = 100;
-		request.setAttribute("storage", storage);
+		
+		 
+		//save pageNum in session 
+		request.getSession().setAttribute("pageNum", pageNum);
 		
 		
-		List<Item> items = serviceFacade.getAvailableItems();
+		List<Item> items = serviceFacade.getAvailableItems(pageNum);
 		Order product = new Order();
 		product.setItems(items);
 		request.setAttribute("product", product);
@@ -65,6 +69,8 @@ public class Purchase {
 
 		request.setAttribute("sum", sum);
 		request.setAttribute("cartSize", cartSize);
+		 
+		 
 		return "OrderEntryForm";
 	}
 
@@ -115,12 +121,13 @@ public class Purchase {
 		return "Confirmation";
 	}
 
-	@RequestMapping(path = "/addToCart", method = RequestMethod.POST)
+ @RequestMapping(path = "/addToCart", method = RequestMethod.POST)
 	public String addItemToCart(@ModelAttribute("JustAnAttributeName") Item itemInCart, HttpServletRequest request) {
+ 	   
 		Order order = (Order) request.getSession().getAttribute("order");
 		// set imagePath, name, price by id
 		int id = itemInCart.getId();
-		itemInCart = serviceFacade.getItemById(id);
+		itemInCart = serviceFacade.getItemById(id );
 		itemInCart.setAvailableQuantity(1);
 		 
 		// update order info
@@ -135,18 +142,26 @@ public class Purchase {
 		}
 
 		request.getSession().setAttribute("order", order);
-
-		return "redirect:/purchase ";
+		
+		int pageNum = (int)request.getSession().getAttribute("pageNum" );
+		return "redirect:/purchase?pageNum="+pageNum; 
 	}
+	 
 
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("JustAnAttributeName") Order order, HttpServletRequest request) {
+		 
+		 
+		 
 		boolean quantityAvail = true ; 
 		request.getSession().setAttribute("maxOrderNum", "");
+		
+		
+		 
 		// reset name, price, images by id
 		List<Item> items =new ArrayList<Item>() ;
 		for (int i = 0; i < order.getItems().size(); i++) {
-			Item item = serviceFacade.getItemById(order.getItems().get(i).getId()) ; 
+			Item item = serviceFacade.getItemById(order.getItems().get(i).getId() ) ; 
 			int storage  = item.getAvailableQuantity() ; 
 			System.out.print(storage) ; 
 			int requestNum = order.getItems().get(i).getAvailableQuantity() ; 
@@ -191,8 +206,9 @@ public class Purchase {
 		}
 
 		request.getSession().setAttribute("order", order);
-		
-		return "redirect:/purchase ";
+		int pageNum = (int)request.getSession().getAttribute("pageNum" );
+		return "redirect:/purchase?pageNum="+pageNum; 
+		 
 
 	}
 
@@ -219,7 +235,7 @@ public class Purchase {
 
 	@RequestMapping(path = "/keepShopping", method = RequestMethod.POST)
 	public String keepShopping(HttpServletRequest request) {
-		return "redirect:/purchase";
+		return "redirect:/purchase?pageNum=1";
 	}
 
 //Helper method
@@ -233,7 +249,8 @@ public class Purchase {
 			double currentQuan = (double) item.getAvailableQuantity();
 			sum += currentPrice * currentQuan;
 		}
-		return sum;
+		return Math.round(sum* 100)/ 100.0;
+		 
 	}
 
 	private int calculateCartSize(Order order) {
@@ -247,7 +264,7 @@ public class Purchase {
 	
 	
 	//ajax 
-	
+	/*
 	//testing 
 	@ResponseBody
 	@RequestMapping(path = "/testing",  method = RequestMethod.POST)
@@ -261,12 +278,37 @@ public class Purchase {
 	//addToCart
 		@ResponseBody
 		@RequestMapping(path = "/addToCartAjax",  method = RequestMethod.POST)
-		public String addToCartAjax(@RequestBody String id ) {  
+		public cartInfo addToCartAjax(@RequestBody String str, HttpServletRequest request ) {  
+		
+			int id = Character.getNumericValue (str.charAt(str.length() - 1)) ; 
 			System.out.println(id) ;
 			
-			String result ="this is a new string for test" ;	
-			//show shopping cart, do in js 
-			return result;
+			Item itemInCart = serviceFacade.getItemById(id);
+			itemInCart.setAvailableQuantity(1);
+			 
+			Order order = (Order) request.getSession().getAttribute("order");
+			// update order info
+			if (order.getItems().contains(itemInCart)) {
+				// alert: already in the cart
+				request.getSession().setAttribute("duplicateItem", itemInCart.getName());
+
+			} else {
+				// add new selected item into the cart
+				order.getItems().add(itemInCart);
+				request.getSession().setAttribute("duplicateItem", "");
+			}
+
+			request.getSession().setAttribute("order", order);
+
+			//data needed:  duplicate item , cart size , order
+			double sum = calculateTotalPrice(order);
+			int cartSize = calculateCartSize(order);
+			cartInfo cart = new cartInfo((String)request.getSession().getAttribute("duplicateItem"), 
+					(String)request.getSession().getAttribute("maxOrderNum"),		cartSize,  sum, order	) ; 
+			
+			 
+			return cart;
 
 		}
+		*/
 }

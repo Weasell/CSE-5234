@@ -11,7 +11,7 @@
  
 
 //reference: https://stackoverflow.com/questions/20245544/how-to-pass-json-object-from-ajax-to-spring-mvc-controller
-
+/*
 function testing(){
 	var data = {}
 	data["testingText"] = document.getElementById("testingText").innerHTML;// $("#testingText").val();
@@ -44,9 +44,9 @@ function addToCart(id){
 		contentType : "application/json",
 		data:  JSON.stringify(data),
 		success:function(data){
-		  $("#testingText").text(id);
+		  $("#testingText").text(data.duplicateItem );
 		
 		}
 	});
 	
-}
+}*/

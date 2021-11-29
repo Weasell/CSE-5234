@@ -8,16 +8,26 @@ public class Item {
 	int availableQuantity;
 	double price;
 	String picURL;
+	int pageNum ; 
 	
 	
     public Item() {}
 	
-	public Item(int id, String name, int availQuan, double price, String picURL) {
+	public Item(int id, String name, int availQuan, double price, String picURL, int pageNum) {
 		this.id = id;
 		this.name = name;
 		this.availableQuantity = availQuan;
 		this.price = price;
 		this.picURL = picURL;
+		this.pageNum = pageNum ; 
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
 
 	public int getId() {
@@ -82,9 +92,10 @@ public class Item {
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", availableQuantity=" + availableQuantity + ", price=" + price
-				+ ", picURL=" + picURL + "]";
+				+ ", picURL=" + picURL + ", pageNum=" + pageNum + "]";
 	}
 
+	 
 
 	
 	
